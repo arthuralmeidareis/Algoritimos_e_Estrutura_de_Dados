@@ -1,1 +1,53 @@
+📘 REGRINHA — SOMA DE DIAGONAIS EM MATRIZ QUADRADA (NxN)
+🟢 🔹 Diagonal Principal
 
+📌 Condição matemática:
+
+i == j
+
+📌 Forma prática para somar:
+
+mat[i, i]
+
+📌 Código padrão:
+
+int somaPrincipal = 0;
+
+for (int i = 0; i < mat.GetLength(0); i++)
+{
+    somaPrincipal += mat[i, i];
+}
+
+🧠 Como lembrar:
+Diagonal principal = linha e coluna iguais.
+
+🔵 🔹 Diagonal Secundária
+
+📌 Condição matemática:
+
+i + j == n - 1
+
+Onde:
+
+n = tamanho da matriz (mat.GetLength(0))
+
+📌 Forma prática para somar:
+
+mat[i, n - 1 - i]
+
+📌 Código padrão:
+
+int somaSecundaria = 0;
+int n = mat.GetLength(0);
+
+for (int i = 0; i < n; i++)
+{
+    somaSecundaria += mat[i, n - 1 - i];
+}
+
+🧠 Como lembrar:
+Diagonal secundária = “espelho” → começa no canto direito e vai descendo.
+
+🎯 Resumo ultra rápido para prova
+Principal  → mat[i,i]
+Secundária → mat[i, n-1-i]
