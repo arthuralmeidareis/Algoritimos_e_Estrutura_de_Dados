@@ -1,0 +1,263 @@
+📌 1️⃣ O que são get e set?
+
+Eles são métodos de acesso.
+
+Em POO, a regra geral é:
+
+🔒 Os atributos devem ser privados (private)
+🔓 O acesso deve ser controlado por métodos públicos
+
+Isso é chamado de encapsulamento.
+
+🔐 Exemplo sem get e set (errado)
+public class Pessoa
+{
+    public string nome;
+}
+
+Problema: qualquer parte do código pode alterar nome sem controle.
+
+✅ Exemplo correto com encapsulamento
+public class Pessoa
+{
+    private string nome;
+
+    public string GetNome()
+    {
+        return nome;
+    }
+
+    public void SetNome(string novoNome)
+    {
+        nome = novoNome;
+    }
+}
+
+Agora o atributo está protegido.
+
+📌 2️⃣ O que faz cada um?
+🔹 get
+
+Serve para obter (ler) o valor de um atributo.
+
+string nomePessoa = pessoa.GetNome();
+
+Ele retorna o valor armazenado.
+
+🔹 set
+
+Serve para modificar (alterar) o valor.
+
+pessoa.SetNome("João");
+
+Ele permite alterar o atributo, mas você pode colocar regras dentro dele.
+
+🧠 Exemplo com validação (aqui está o poder real)
+public void SetIdade(int novaIdade)
+{
+    if (novaIdade >= 0)
+    {
+        idade = novaIdade;
+    }
+}
+
+Agora ninguém consegue colocar idade negativa.
+Isso é controle.
+
+📌 3️⃣ Forma moderna no C#
+
+No C# usamos propriedades:
+
+public class Pessoa
+{
+    public string Nome { get; set; }
+}
+
+Isso já cria automaticamente os métodos.
+
+Se quiser proteger mais:
+
+public string Nome { get; private set; }
+
+Agora só a própria classe pode alterar.
+
+📌 4️⃣ O que é um Construtor?
+
+O construtor é um método especial que:
+
+Tem o mesmo nome da classe
+
+É executado quando o objeto é criado
+
+Serve para inicializar valores
+
+🔹 Exemplo
+public class Pessoa
+{
+    public string Nome { get; set; }
+
+    public Pessoa(string nome)
+    {
+        Nome = nome;
+    }
+}
+
+Agora, quando criar:
+
+Pessoa p = new Pessoa("Carlos");
+
+O nome já é definido na criação.
+
+📌 5️⃣ Por que construtores são importantes?
+
+Porque garantem que o objeto já nasce válido.
+
+Imagine um sistema bancário:
+
+public class Conta
+{
+    public string Titular { get; private set; }
+    public double Saldo { get; private set; }
+
+    public Conta(string titular)
+    {
+        Titular = titular;
+        Saldo = 0;
+    }
+}
+
+Você garante que toda conta tem um titular e começa com saldo 0.
+
+📌 6️⃣ Resumo mental para fixar
+Conceito	Função
+private	Protege o atributo
+get	Lê o valor
+set	Altera o valor
+Construtor	Inicializa o objeto
+🧠 Pensamento importante (nível mais avançado)
+
+Pergunta que você deve começar a se fazer:
+
+"Esse atributo realmente precisa de um set público?"
+
+Muitas vezes o correto é:
+
+public double Saldo { get; private set; }
+
+E criar um método específico:
+
+public void Depositar(double valor)
+{
+    if (valor > 0)
+        Saldo += valor;
+}
+
+Isso evita alterações erradas.
+
+Se você quiser, eu posso:
+
+✅ Montar um exercício prático pra você treinar
+
+✅ Mostrar como isso aparece em um diagrama de classes
+
+✅ Explicar como isso funciona em Kotlin (já que você gosta da linguagem)
+
+Qual você prefere?
+
+quando nós usamos o this na frente do construtor?
+
+Boa pergunta 👏 essa é uma dúvida clássica — e entender isso mostra que você está começando a pensar como programador de verdade.
+
+Vamos direto ao ponto:
+
+📌 Quando usamos this no construtor?
+
+Existem duas situações principais:
+
+🟢 1️⃣ Quando o parâmetro tem o mesmo nome do atributo
+
+Esse é o caso mais comum.
+
+Exemplo:
+public class Pessoa
+{
+    private string nome;
+
+    public Pessoa(string nome)
+    {
+        this.nome = nome;
+    }
+}
+O que está acontecendo?
+
+this.nome → atributo da classe
+
+nome → parâmetro do construtor
+
+Se você escrever só:
+
+nome = nome;
+
+O C# entende como:
+
+parâmetro = parâmetro
+
+Ou seja, não muda nada 😅
+
+💡 Regra mental:
+
+this significa:
+"esse atributo pertence ao objeto atual"
+
+🟢 2️⃣ Quando chamamos outro construtor da mesma classe
+
+Existe outro uso importante.
+
+public class Pessoa
+{
+    public string Nome { get; set; }
+    public int Idade { get; set; }
+
+    public Pessoa(string nome)
+    {
+        Nome = nome;
+    }
+
+    public Pessoa(string nome, int idade) : this(nome)
+    {
+        Idade = idade;
+    }
+}
+
+Aqui:
+
+: this(nome)
+
+Significa:
+
+"Antes de executar esse construtor, chame o outro construtor que recebe nome."
+
+Isso evita repetição de código.
+
+🧠 Diferença importante
+Uso	Significado
+this.nome	Atributo da classe
+: this(...)	Chama outro construtor
+📌 Quando NÃO precisa usar this?
+
+Quando os nomes são diferentes:
+
+public Pessoa(string nomeRecebido)
+{
+    nome = nomeRecebido; // funciona sem this
+}
+🧠 Dica de programador experiente
+
+Muitos devs usam nomes iguais de propósito:
+
+public Pessoa(string nome)
+{
+    this.nome = nome;
+}
+
+Porque fica mais limpo e padronizado.
